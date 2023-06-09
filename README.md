@@ -1,7 +1,7 @@
 # GoodTipper
 
 TRY IT OUT HERE:
-
+http://htmlpreview.github.io/?https://github.com/octoConnors/GoodTipper/blob/main/index.html
 
 A javascript applet made for the Skillshare course "Build a Tip Calculator" by Chris Dixon.
 Code is mostly from that course, with some flourishes added by me:
