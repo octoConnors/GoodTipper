@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles.css" />
+    <title>Good Tipper</title>
+</head>
+<body>
+    <main id="container">
+    <h1>Good Tipper</h1>
+
+    <section>
+        <div class = "space-between bill">
+            <label for="">Bill</label>
+            <input
+                type="number"
+                placeholder="Your bill"
+                id="yourBill"
+            />
+        </div>
+        <div>
+            <div class = "space-between">
+                <label for="tipInput">Select tip</label>
+                <span id="tipPercent">15%</span>
+            </div>
+            <input type="range" value="15" min="0" max="100" id="tipInput" step="5" class="range"/>
+        </div>
+        <div class = "space-between">
+            <span>Tip</span>
+            <span id="tipValue"></span>
+        </div>
+        <hr />
+        <div class = "space-between total">
+            <span>Total</span>
+            <span id="totalWithTip"></span>
+        </div>
+    </section>
+    <section>
+        <div>
+            <div class = "space-between">
+                <label for="">Split</label>
+                <span id="splitValue">1 person</span>
+            </div>
+            <input type="range" min="1" max="10" value="1" id="splitInput" class="range" />
+        </div>
+        <div id="splitDetails">
+            <div class = "space-between">
+                <span>Bill each</span>
+                <spawn id="billEach"></spawn>
+            </div>
+            <div class = "space-between">
+                <span>Tip each</span>
+                <span id="tipEach"></span>
+            </div>
+            <hr />
+            <div class = "space-between total">
+                <span>Total Per Person</span>
+                <span id = "totalPerPerson"></span>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    function formatMoney(value) {
+        value = Math.ceil(value * 100) / 100;
+        value = value.toFixed(2)
+        return "$ "+value;
+    }
+
+    function update(){
+        let bill = Number(document.getElementById("yourBill").value);
+        let tipPercent = document.getElementById("tipInput").value;
+        let split = document.getElementById("splitInput").value;
+
+        let tipValue = bill * (tipPercent/100);
+        let tipEach = tipValue/split;
+        let newBillEach = bill / split;
+
+        document.getElementById("tipPercent").innerHTML=tipPercent+"%"
+        document.getElementById("tipValue").innerHTML=formatMoney(tipValue);
+        document.getElementById("totalWithTip").innerHTML = formatMoney(bill+tipValue);
+        if (split === "1"){
+            document.getElementById("splitValue").innerHTML = split + " person"
+            document.getElementById("splitDetails").style.display = "none"
+        }
+        else {
+            document.getElementById("splitValue").innerHTML = split + " people"
+            document.getElementById("splitDetails").style.display = "inline"
+        }
+        document.getElementById("billEach").innerHTML = formatMoney(newBillEach);
+        document.getElementById("tipEach").innerHTML = formatMoney(tipEach);
+        document.getElementById("totalPerPerson").innerHTML = formatMoney(newBillEach + tipEach);
+    }
+
+    let container = document.getElementById("container");
+    container.addEventListener("input", update);
+    window.onload = function(){
+        document.getElementById("tipInput").value = 15;
+        document.getElementById("splitInput").value = 1;
+        document.getElementByID("yourBill").value = '';
+        update();
+    }
+</script>
+</body>
+</html>
